@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://valerielinc-ops.github.io/eteria/sitemap.xml
