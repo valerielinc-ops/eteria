@@ -1,3 +1,19 @@
+@font-face {
+  font-family: "Craw Modern";
+  src: url("./fonts/opticraw-modern.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Garet";
+  src: url("./fonts/garet-book.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   --blue: #b3cde1;
   --burgundy: #550015;
@@ -168,19 +184,22 @@ a {
 }
 
 .brand__wordmark {
-  font-family: var(--serif);
+  font-family: "Craw Modern", var(--serif);
   font-size: clamp(3.35rem, 15vw, 6.8rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 0.75;
-  letter-spacing: -0.055em;
+  letter-spacing: 0;
 }
 
 .brand__tagline {
   margin-top: 0.72rem;
-  font-size: clamp(0.55rem, 2.4vw, 0.72rem);
-  font-weight: 700;
-  letter-spacing: 0.47em;
-  text-indent: 0.47em;
+  font-family: "Garet", var(--sans);
+  font-size: clamp(0.72rem, 3.25vw, 1.6rem);
+  font-weight: 400;
+  letter-spacing: 0.9em;
+  line-height: 1;
+  text-indent: 0.9em;
+  white-space: nowrap;
 }
 
 .claim-block {
@@ -226,6 +245,29 @@ a {
   box-shadow: 0 12px 34px rgba(85, 0, 21, 0.08);
   backdrop-filter: blur(14px) saturate(1.15);
   -webkit-backdrop-filter: blur(14px) saturate(1.15);
+}
+
+.early-offer {
+  display: flex;
+  margin: 0 0 0.68rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: clamp(0.66rem, 2.7vw, 0.76rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.early-offer__badge {
+  flex: 0 0 auto;
+  padding: 0.24rem 0.46rem;
+  border-radius: 999px;
+  background: var(--burgundy);
+  color: #fff;
+  font-size: 0.61rem;
+  letter-spacing: 0.09em;
 }
 
 .countdown {
@@ -647,6 +689,11 @@ a {
   .signup-card {
     margin-top: 0.75rem;
     padding: 0.65rem;
+  }
+
+  .early-offer {
+    margin-bottom: 0.48rem;
+    font-size: 0.64rem;
   }
 
   .form-feedback {
