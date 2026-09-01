@@ -37,13 +37,17 @@
   transition: color 700ms ease, text-shadow 700ms ease;
 }
 
+.v2-intro .brand__tagline {
+  font-size: clamp(0.87rem, 3.9vw, 1.9rem);
+}
+
 .v2-intro:not(.intro-complete) .brand__wordmark {
   color: var(--blue);
   text-shadow: none;
 }
 
 .v2-intro.intro-complete .brand__wordmark {
-  color: #a60046;
+  color: var(--burgundy);
   text-shadow: 0 8px 28px rgba(85, 0, 21, 0.28);
 }
 
