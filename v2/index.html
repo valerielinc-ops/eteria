@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <base href="../">
+
+    <title>eteria — Smart Luxury. Red reveal preview.</title>
+    <meta name="description" content="eteria is coming. A new kind of fine jewelry — smarter, cooler, timeless. Join the waitlist and be first.">
+    <meta name="robots" content="noindex,follow">
+    <meta name="theme-color" content="#550015">
+    <link rel="canonical" href="https://valerielinc-ops.github.io/eteria/">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://audio-ssl.itunes.apple.com" crossorigin>
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="eteria">
+    <meta property="og:title" content="eteria — Smart Luxury">
+    <meta property="og:description" content="Something brilliant is about to drop. Be first.">
+    <meta property="og:url" content="https://valerielinc-ops.github.io/eteria/v2/">
+    <meta property="og:image" content="https://valerielinc-ops.github.io/eteria/images/og-eteria-1200x630.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="eteria Smart Luxury campaign portrait">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="eteria — Smart Luxury">
+    <meta name="twitter:description" content="Something brilliant is about to drop. Be first.">
+    <meta name="twitter:image" content="https://valerielinc-ops.github.io/eteria/images/og-eteria-1200x630.webp">
+    <meta name="twitter:image:alt" content="eteria Smart Luxury campaign portrait">
+
+    <link rel="preload" as="image" href="images/hero-poster-800.webp" fetchpriority="high">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="v2/styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "eteria",
+        "url": "https://valerielinc-ops.github.io/eteria/",
+        "sameAs": ["https://www.instagram.com/eteriajewellery/"]
+      }
+    </script>
+    <script src="app.js" defer></script>
+    <script src="v2/app.js" defer></script>
+  </head>
+  <body class="v2-intro">
+    <main class="teaser">
+      <section class="hero" aria-labelledby="launch-claim">
+        <img
+          class="hero__poster"
+          src="images/hero-poster-800.webp"
+          width="800"
+          height="1000"
+          alt="Model wearing a stack of brilliant eteria rings"
+          decoding="async"
+          fetchpriority="high"
+        >
+        <div class="collage" id="collage" aria-hidden="true"></div>
+        <div class="hero__scrim" aria-hidden="true"></div>
+
+        <div class="hero__content">
+          <div class="brand" aria-label="eteria, Smart Luxury">
+            <p class="brand__wordmark">eteria</p>
+            <p class="brand__tagline">SMART LUXURY</p>
+          </div>
+
+          <div class="claim-block">
+            <h1 class="claim" id="launch-claim">Something brilliant is about to drop.</h1>
+            <p class="subclaim">Fine jewelry, but smarter. Be first — or hear about it from everyone else.</p>
+          </div>
+
+          <div class="signup-card" id="signup-card">
+            <p class="countdown" id="countdown" hidden>Drop 01 lands soon</p>
+
+            <form class="signup-form" id="signup-form" autocomplete="off" novalidate>
+              <div class="honeypot" aria-hidden="true">
+                <label for="company">Company</label>
+                <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
+              </div>
+
+              <div class="signup-form__row">
+                <div class="email-field">
+                  <label class="sr-only" for="email">Email address</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    inputmode="email"
+                    autocomplete="off"
+                    autocapitalize="none"
+                    spellcheck="false"
+                    role="combobox"
+                    placeholder="Your email"
+                    aria-autocomplete="list"
+                    aria-controls="email-suggestions"
+                    aria-expanded="false"
+                    aria-describedby="form-feedback consent"
+                    required
+                  >
+                  <div class="email-autocomplete" id="email-suggestions" role="listbox" aria-label="Email provider suggestions" hidden></div>
+                </div>
+                <button class="signup-form__button" id="submit-button" type="submit">
+                  <span class="button-label">Get early access</span>
+                  <span class="button-loader" aria-hidden="true"></span>
+                </button>
+              </div>
+
+              <p class="form-feedback" id="form-feedback" aria-live="polite"></p>
+              <p class="microcopy">Be first. No spam — just the drop.</p>
+              <p class="consent" id="consent">By signing up you accept our <a href="v2/#privacy" aria-label="Privacy policy, coming soon">privacy policy</a>.</p>
+            </form>
+
+            <p class="success-message" id="success-message" aria-live="polite" hidden>You’re in. 💎 Talk soon.</p>
+          </div>
+        </div>
+
+        <div class="sound-control" id="sound-control" hidden>
+          <div class="sound-toast" id="sound-toast" role="status">🔊 Tap for the vibe</div>
+          <button class="sound-button" id="sound-button" type="button" aria-label="Play Movin’ To The Sun preview" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 14v-4M9 17V7M13 15.5v-7M17 19V5M21 14v-4"></path>
+            </svg>
+          </button>
+        </div>
+        <audio id="background-audio" loop autoplay preload="auto" playsinline></audio>
+
+        <footer class="footer">
+          <span>© eteria</span>
+          <div class="footer__links">
+            <a href="https://www.instagram.com/eteriajewellery/" target="_blank" rel="noopener noreferrer" aria-label="eteria on Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                <circle cx="12" cy="12" r="4"></circle>
+                <circle cx="17.5" cy="6.5" r="1"></circle>
+              </svg>
+            </a>
+            <a href="v2/#privacy" aria-label="Privacy policy, coming soon">Privacy</a>
+          </div>
+        </footer>
+      </section>
+    </main>
+  </body>
+</html>

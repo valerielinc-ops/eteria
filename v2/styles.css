@@ -1,0 +1,102 @@
+.v2-intro,
+.v2-intro .hero,
+.v2-intro .collage,
+.v2-intro .tile {
+  background: var(--burgundy);
+}
+
+.v2-intro .hero__poster {
+  display: none;
+}
+
+.v2-intro .collage {
+  opacity: 1;
+  transition: background-color 700ms ease;
+}
+
+.v2-intro.intro-complete .collage {
+  background: var(--off-white);
+}
+
+.v2-intro .hero__scrim {
+  opacity: 0;
+  transition: opacity 900ms ease;
+}
+
+.v2-intro.intro-complete .hero__scrim {
+  opacity: 1;
+}
+
+.v2-intro .brand,
+.v2-intro .claim,
+.v2-intro .subclaim {
+  transition: color 700ms ease, text-shadow 700ms ease;
+}
+
+.v2-intro:not(.intro-complete) .brand,
+.v2-intro:not(.intro-complete) .claim,
+.v2-intro:not(.intro-complete) .subclaim {
+  color: var(--off-white);
+  text-shadow: 0 2px 22px rgba(85, 0, 21, 0.5);
+}
+
+.v2-intro .footer {
+  transition: color 700ms ease, background-color 700ms ease, border-color 700ms ease;
+}
+
+.v2-intro:not(.intro-complete) .footer {
+  border-color: rgba(250, 250, 248, 0.18);
+  background: rgba(85, 0, 21, 0.94);
+  color: var(--off-white);
+}
+
+.v2-intro .tile {
+  z-index: 1;
+  border-radius: 1.1rem;
+  opacity: 0;
+  box-shadow: 0 18px 42px rgba(28, 0, 7, 0.42);
+  transform:
+    translate3d(var(--entry-x, 0), var(--entry-y, 10%), 0)
+    rotate(var(--entry-rotation, -4deg))
+    scale(0.58);
+  transition:
+    opacity 520ms ease,
+    transform 760ms cubic-bezier(0.17, 0.84, 0.24, 1),
+    border-radius 760ms ease,
+    box-shadow 760ms ease;
+}
+
+.v2-intro .tile.is-revealed {
+  z-index: auto;
+  border-radius: 0;
+  opacity: 1;
+  box-shadow: none;
+  transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+}
+
+.v2-intro .tile.is-revealed.is-hero {
+  z-index: 5;
+  transform: translate3d(0, 0, 0) rotate(0deg) scale(1.6);
+}
+
+.v2-intro:not(.intro-complete) .tile.is-swapping .tile__image--current {
+  opacity: 1;
+}
+
+.v2-intro:not(.intro-complete) .tile.is-swapping .tile__image--next {
+  opacity: 0;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-intro .tile {
+    border-radius: 0;
+    opacity: 1;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .v2-intro .hero__scrim {
+    opacity: 1;
+  }
+}
