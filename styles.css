@@ -1,8 +1,8 @@
 @font-face {
   font-family: "Craw Modern";
-  src: url("./fonts/opticraw-modern.otf") format("opentype");
+  src: url("./fonts/opticraw-modern-bold.otf") format("opentype");
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   font-display: swap;
 }
 
@@ -186,19 +186,19 @@ a {
 .brand__wordmark {
   font-family: "Craw Modern", var(--serif);
   font-size: clamp(3.35rem, 15vw, 6.8rem);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 0.75;
-  letter-spacing: 0;
+  letter-spacing: -0.056em;
 }
 
 .brand__tagline {
   margin-top: 0.72rem;
   font-family: "Garet", var(--sans);
-  font-size: clamp(0.72rem, 3.25vw, 1.6rem);
+  font-size: clamp(1.02rem, 4.6vw, 2.2rem);
   font-weight: 400;
-  letter-spacing: 0.9em;
+  letter-spacing: 0.46em;
   line-height: 1;
-  text-indent: 0.9em;
+  text-indent: 0.46em;
   white-space: nowrap;
 }
 
