@@ -10,6 +10,7 @@
     <meta name="theme-color" content="#550015">
     <link rel="canonical" href="https://valerielinc-ops.github.io/eteria/">
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://audio-ssl.itunes.apple.com" crossorigin>
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="eteria">
@@ -69,26 +70,33 @@
           <div class="signup-card" id="signup-card">
             <p class="countdown" id="countdown" hidden>Drop 01 lands soon</p>
 
-            <form class="signup-form" id="signup-form" novalidate>
+            <form class="signup-form" id="signup-form" autocomplete="off" novalidate>
               <div class="honeypot" aria-hidden="true">
                 <label for="company">Company</label>
                 <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
               </div>
 
               <div class="signup-form__row">
-                <label class="sr-only" for="email">Email address</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  inputmode="email"
-                  autocomplete="email"
-                  list="email-provider-list"
-                  placeholder="Your email"
-                  aria-describedby="form-feedback consent"
-                  required
-                >
-                <datalist id="email-provider-list"></datalist>
+                <div class="email-field">
+                  <label class="sr-only" for="email">Email address</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    inputmode="email"
+                    autocomplete="off"
+                    autocapitalize="none"
+                    spellcheck="false"
+                    role="combobox"
+                    placeholder="Your email"
+                    aria-autocomplete="list"
+                    aria-controls="email-suggestions"
+                    aria-expanded="false"
+                    aria-describedby="form-feedback consent"
+                    required
+                  >
+                  <div class="email-autocomplete" id="email-suggestions" role="listbox" aria-label="Email provider suggestions" hidden></div>
+                </div>
                 <button class="signup-form__button" id="submit-button" type="submit">
                   <span class="button-label">Get early access</span>
                   <span class="button-loader" aria-hidden="true"></span>
@@ -112,7 +120,7 @@
             </svg>
           </button>
         </div>
-        <audio id="background-audio" loop preload="metadata"></audio>
+        <audio id="background-audio" loop autoplay preload="auto" playsinline></audio>
 
         <footer class="footer">
           <span>© eteria</span>

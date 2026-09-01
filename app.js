@@ -239,10 +239,37 @@ function emailIssue(value) {
 function setupForm() {
   const form = document.querySelector("#signup-form");
   const email = document.querySelector("#email");
-  const providerList = document.querySelector("#email-provider-list");
+  const providerList = document.querySelector("#email-suggestions");
   const feedback = document.querySelector("#form-feedback");
   const button = document.querySelector("#submit-button");
   const success = document.querySelector("#success-message");
+  let activeSuggestion = -1;
+
+  const closeProviderSuggestions = () => {
+    providerList.hidden = true;
+    providerList.replaceChildren();
+    email.setAttribute("aria-expanded", "false");
+    email.removeAttribute("aria-activedescendant");
+    activeSuggestion = -1;
+  };
+
+  const useProviderSuggestion = (value) => {
+    email.value = value;
+    email.removeAttribute("aria-invalid");
+    feedback.replaceChildren();
+    closeProviderSuggestions();
+    email.focus();
+  };
+
+  const selectProviderSuggestion = (index) => {
+    const options = [...providerList.querySelectorAll(".email-autocomplete__option")];
+    if (!options.length) return;
+    activeSuggestion = (index + options.length) % options.length;
+    options.forEach((option, optionIndex) => {
+      option.setAttribute("aria-selected", String(optionIndex === activeSuggestion));
+    });
+    email.setAttribute("aria-activedescendant", options[activeSuggestion].id);
+  };
 
   const showFeedback = (issue) => {
     feedback.replaceChildren(document.createTextNode(issue.message));
@@ -265,18 +292,34 @@ function setupForm() {
   const updateProviderSuggestions = () => {
     const [local, fragment = ""] = email.value.trim().split("@");
     if (!local || !email.value.includes("@") || email.value.split("@").length !== 2) {
-      providerList.replaceChildren();
+      closeProviderSuggestions();
       return;
     }
 
     const matches = EMAIL_PROVIDERS
       .filter((provider) => provider.startsWith(fragment.toLowerCase()) && provider !== fragment.toLowerCase())
-      .slice(0, 8);
-    providerList.replaceChildren(...matches.map((provider) => {
-      const option = document.createElement("option");
-      option.value = `${local}@${provider}`;
+      .slice(0, 4);
+    if (!matches.length) {
+      closeProviderSuggestions();
+      return;
+    }
+
+    providerList.replaceChildren(...matches.map((provider, index) => {
+      const value = `${local}@${provider}`;
+      const option = document.createElement("button");
+      option.className = "email-autocomplete__option";
+      option.id = `email-suggestion-${index}`;
+      option.type = "button";
+      option.setAttribute("role", "option");
+      option.setAttribute("aria-selected", "false");
+      option.textContent = value;
+      option.addEventListener("pointerdown", (event) => event.preventDefault());
+      option.addEventListener("click", () => useProviderSuggestion(value));
       return option;
     }));
+    providerList.hidden = false;
+    email.setAttribute("aria-expanded", "true");
+    activeSuggestion = -1;
   };
 
   email.addEventListener("input", () => {
@@ -285,8 +328,27 @@ function setupForm() {
     updateProviderSuggestions();
   });
 
+  email.addEventListener("keydown", (event) => {
+    if (providerList.hidden) return;
+    const options = providerList.querySelectorAll(".email-autocomplete__option");
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      selectProviderSuggestion(activeSuggestion + 1);
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      selectProviderSuggestion(activeSuggestion - 1);
+    } else if (event.key === "Enter" && activeSuggestion >= 0) {
+      event.preventDefault();
+      useProviderSuggestion(options[activeSuggestion].textContent);
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      closeProviderSuggestions();
+    }
+  });
+
   email.addEventListener("blur", () => {
     email.value = email.value.trim();
+    window.setTimeout(closeProviderSuggestions, 100);
   });
 
   form.addEventListener("submit", async (event) => {
@@ -294,6 +356,7 @@ function setupForm() {
     if (form.elements.company.value) return;
 
     email.value = email.value.trim();
+    closeProviderSuggestions();
     const issue = emailIssue(email.value);
     if (issue || !email.validity.valid) {
       email.setAttribute("aria-invalid", "true");
@@ -308,16 +371,20 @@ function setupForm() {
     feedback.replaceChildren();
 
     try {
-      const response = await fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: email.value.trim() }),
-      });
+      if (FORM_ENDPOINT.includes("YOUR_ID")) {
+        await new Promise((resolve) => window.setTimeout(resolve, 450));
+      } else {
+        const response = await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: email.value.trim() }),
+        });
 
-      if (!response.ok) throw new Error("Signup request failed");
+        if (!response.ok) throw new Error("Signup request failed");
+      }
 
       form.hidden = true;
       success.hidden = false;
@@ -369,8 +436,32 @@ function setupAudio() {
     button.setAttribute("aria-label", isPlaying ? "Pause Movin’ To The Sun preview" : "Play Movin’ To The Sun preview");
   };
 
+  const startPlayback = async (hideOnFailure = false) => {
+    if (!audio.paused) {
+      setPlayingState(true);
+      dismissToast();
+      return true;
+    }
+
+    audio.volume = 0.08;
+    setPlayingState(true);
+    fadeVolume(0.35, 500);
+    try {
+      await audio.play();
+      dismissToast();
+      return true;
+    } catch {
+      window.cancelAnimationFrame(fadeFrame);
+      audio.volume = 0.35;
+      setPlayingState(false);
+      if (hideOnFailure) control.hidden = true;
+      return false;
+    }
+  };
+
   audio.volume = 0.35;
   audio.addEventListener("loadedmetadata", revealControl, { once: true });
+  audio.addEventListener("canplay", () => startPlayback(), { once: true });
   audio.addEventListener("error", () => {
     if (!triedFallback) {
       triedFallback = true;
@@ -384,15 +475,7 @@ function setupAudio() {
   button.addEventListener("click", async () => {
     dismissToast();
     if (audio.paused) {
-      audio.volume = 0;
-      try {
-        await audio.play();
-        setPlayingState(true);
-        fadeVolume(0.35, 500);
-      } catch {
-        setPlayingState(false);
-        control.hidden = true;
-      }
+      await startPlayback(true);
     } else {
       fadeVolume(0, 500, () => {
         audio.pause();
@@ -401,6 +484,14 @@ function setupAudio() {
       });
     }
   });
+
+  const unlockOnFirstInteraction = (event) => {
+    if (event.target.closest?.("#sound-button")) return;
+    startPlayback();
+  };
+  document.addEventListener("pointerdown", unlockOnFirstInteraction, { capture: true, once: true });
+  document.addEventListener("click", unlockOnFirstInteraction, { capture: true, once: true });
+  document.addEventListener("keydown", unlockOnFirstInteraction, { capture: true, once: true });
 
   audio.src = AUDIO_PREVIEW_URL;
   audio.load();
